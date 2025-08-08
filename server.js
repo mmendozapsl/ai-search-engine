@@ -12,6 +12,7 @@ const { apiLimiter } = require('./src/middleware/rateLimiter');
 // Import routes
 const userRoutes = require('./src/routes/users');
 const searchRoutes = require('./src/routes/search');
+const pslAiSearchRoutes = require('./src/routes/psl-ai-search');
 
 // Import database config
 const { testConnection, initializeDatabase } = require('./src/config/database');
@@ -57,6 +58,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', apiLimiter);
 app.use('/api/users', userRoutes);
 app.use('/api/search', searchRoutes);
+app.use('/api/v1/psl-ai-search', pslAiSearchRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -92,6 +94,10 @@ app.get('/api', (req, res) => {
         'PUT /api/search/:id/results': 'Update search results count',
         'GET /api/search/stats': 'Get search statistics',
         'GET /api/search/popular': 'Get popular search terms'
+      },
+      'psl-ai-search': {
+        'POST /api/v1/psl-ai-search': 'Handle PSL AI Search plugin requests',
+        'GET /api/v1/psl-ai-search/stats': 'Get PSL AI Search statistics'
       },
       utility: {
         'GET /health': 'Health check',
