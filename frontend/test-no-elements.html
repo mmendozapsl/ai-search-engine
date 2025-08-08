@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page Without PSL AI Search Elements</title>
+</head>
+<body>
+    <h1>Test Page Without PSL AI Search Elements</h1>
+    <p>This page has no psl-ai-search elements. The plugin should recognize this and not make any API calls.</p>
+    
+    <div id="log"></div>
+    
+    <script>
+        function logMessage(message) {
+            const log = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            log.innerHTML += `[${timestamp}] ${message}<br>`;
+        }
+        
+        // Override console.log to capture plugin logs
+        const originalLog = console.log;
+        console.log = function(...args) {
+            const message = args.join(' ');
+            if (message.includes('psl-ai-search')) {
+                logMessage(`LOG: ${message}`);
+            }
+            originalLog.apply(console, args);
+        };
+        
+        logMessage('Page loaded - no psl-ai-search elements present');
+    </script>
+    
+    <!-- Load the plugin from the backend server -->
+    <script src="http://localhost:3000/v1/embed/psl-ai-search.js"></script>
+</body>
+</html>
