@@ -1,4 +1,4 @@
-# AI Search Engine - Monorepo Architecture
+# AI Search Engine
 
 An AI-powered Semantic Search Engine restructured as a monorepo with separate frontend and backend services. This project provides AI search capabilities for CME platforms using natural language queries like:
 
