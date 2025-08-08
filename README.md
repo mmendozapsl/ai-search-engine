@@ -1,155 +1,195 @@
-# Hackathon-2025: AI Semantic Search Engine
+# AI Search Engine - Monorepo Architecture
 
-An AI-powered Semantic Search Engine for CME platforms to search using natural language like:
+An AI-powered Semantic Search Engine restructured as a monorepo with separate frontend and backend services. This project provides AI search capabilities for CME platforms using natural language queries like:
 
-“Short videos on insulin titration for elderly patients”
+"Short videos on insulin titration for elderly patients"
 
-“CME on managing chronic kidney disease in diabetics”
+"CME on managing chronic kidney disease in diabetics"
 
-“Upcoming events on sepsis diagnosis”
+"Upcoming events on sepsis diagnosis"
 
 Instead of relying on rigid keyword matching, the engine will understand intent and medical context to return precise, relevant results.
 
-## Usage Example
-To embed the plugin on any website.
+![AI Search Engine Interface](https://github.com/user-attachments/assets/7ed340bd-d356-4778-9a4c-1c87e710537b)
 
-1. Add elements with uid attributes:
+## 🏗️ Architecture
+
+This project follows a **monorepo architecture** with separate services:
+
 ```
-<!-- Add elements with uid attributes -->
-<psl-ai-search uid="user-123"></psl-ai-search>
-<psl-ai-search uid="search-456"></psl-ai-search>
+├── backend/                  # Node.js + Express.js API server
+│   ├── src/
+│   │   ├── controllers/      # Business logic controllers
+│   │   ├── middleware/       # Custom middleware (auth, validation, errors)
+│   │   ├── routes/           # API route definitions
+│   │   ├── config/           # Database configurations
+│   │   └── models/           # Data models
+│   ├── app.js                # Main application entry point
+│   ├── .env.example          # Environment variables template
+│   └── package.json          # Backend dependencies
+├── frontend/                 # HTML/CSS/JS frontend
+│   ├── css/                  # Stylesheets
+│   ├── js/                   # JavaScript files
+│   ├── index.html            # Main HTML file
+│   └── package.json          # Frontend dependencies
+└── package.json              # Root package.json with workspaces
 ```
 
-2. Include the plugin script
-* With the execution of an script (recomended):
-```
-<script>(function() {const u = 'http://{backendServer}/v1/embed/psl-ai-search.js';const d = document;const e = d.createElement('script');e.src = u;e.id = 'psl-ai-srshsc';d.body.appendChild(e);})();</script>
-```
-* Loading the script directly
-```
-<script src="https://{backendServer}/v1/embed/psl-ai-search.js"></script>
-```
+## 🚀 Key Features
 
-The plugin will automatically:
-
-1. Scan for psl-ai-search elements on page load
-2. Extract the uid from each element
-3. Send POST requests to /api/v1/psl-ai-search with the UID
-4. Emit custom events for successful processing
-
-![AI Search Engine Interface](https://github.com/user-attachments/assets/fe2474bc-3f76-430a-beba-84a6ca487c85)
-
-## 🚀 Features
-
+### Backend Services
 - **RESTful API**: Complete REST API with CRUD operations
 - **MySQL Database**: Relational database with connection pooling
 - **Security**: Helmet, CORS, rate limiting, input validation
-- **Frontend Interface**: Modern responsive web interface
-- **Scalable Architecture**: Modular design following best practices
 - **Error Handling**: Comprehensive error handling and logging
 - **Environment Configuration**: Environment-based configuration
 
-## 🛠️ Tech Stack
+### Frontend Services
+- **Public Welcome Page**: Landing page for all users
+- **Registered User Dashboard**: Interactive dashboard for authenticated users
+- **AI Search Interface**: Natural language search capabilities
+- **Responsive Design**: Modern, responsive web interface
 
-### Backend
-- **Node.js** - JavaScript runtime
-- **Express.js** - Web application framework
-- **MySQL2** - MySQL database driver with Promise support
-- **Helmet** - Security middleware
-- **CORS** - Cross-Origin Resource Sharing
-- **Morgan** - HTTP request logger
-- **Express Rate Limit** - Rate limiting middleware
-- **Express Validator** - Input validation and sanitization
+### AI Search Plugin
+- **Embeddable Plugin**: Can be embedded on external websites
+- **Natural Language Processing**: Semantic search capabilities
+- **Real-time Results**: Fast search response times
 
-### Frontend
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with custom properties
-- **JavaScript (ES6+)** - Modern JavaScript features
-- **Bootstrap 5** - Responsive UI framework
-- **Font Awesome** - Icon library
+## 🛠️ Quick Start
 
-## 📋 Prerequisites
+### Prerequisites
+- Node.js v14+ 
+- MySQL server (optional for basic functionality)
 
-- Node.js (v14 or higher)
-- MySQL (v5.7 or higher)
-- npm or yarn package manager
+### Installation
 
-## 🔧 Installation
-
-1. **Clone the repository**
+1. **Clone the repository**:
    ```bash
    git clone <repository-url>
    cd ai-search-engine
    ```
 
-2. **Install dependencies**
+2. **Install all dependencies**:
    ```bash
    npm install
    ```
 
-3. **Configure environment variables**
+3. **Configure environment** (optional):
    ```bash
-   cp .env.example .env
-   ```
-   
-   Edit `.env` file with your configuration:
-   ```env
-   # Server Configuration
-   PORT=3000
-   NODE_ENV=development
-
-   # Database Configuration
-   DB_HOST=localhost
-   DB_PORT=3306
-   DB_NAME=ai_search_engine
-   DB_USER=your_mysql_username
-   DB_PASSWORD=your_mysql_password
-
-   # Security
-   JWT_SECRET=your-super-secret-jwt-key
-
-   # Rate Limiting
-   RATE_LIMIT_WINDOW_MS=900000
-   RATE_LIMIT_MAX_REQUESTS=100
+   cp backend/.env.example backend/.env
+   # Edit backend/.env with your MySQL credentials
    ```
 
-4. **Set up MySQL database**
-   ```sql
-   CREATE DATABASE ai_search_engine;
-   ```
-
-5. **Start the application**
+4. **Start the development server**:
    ```bash
-   # Development mode with auto-restart
    npm run dev
-   
-   # Production mode
-   npm start
    ```
 
-## 🌐 API Endpoints
+5. **Access the application**:
+   - Frontend: http://localhost:3000
+   - API Documentation: http://localhost:3000/api
+   - Health Check: http://localhost:3000/health
+
+## 📦 Workspace Commands
+
+The monorepo uses npm workspaces for efficient dependency management:
+
+```bash
+# Start backend development server
+npm run dev
+
+# Start backend production server  
+npm run start
+
+# Install dependencies for all workspaces
+npm run install-all
+
+# Run tests in all workspaces
+npm test
+```
+
+## 🔌 Plugin Usage
+
+To embed the AI search plugin on any website:
+
+1. **Add elements with uid attributes**:
+   ```html
+   <psl-ai-search uid="user-123"></psl-ai-search>
+   <psl-ai-search uid="search-456"></psl-ai-search>
+   ```
+
+2. **Include the plugin script**:
+   ```html
+   <script>
+   (function() {
+     const u = 'http://localhost:3000/tools/v1/embed/psl-ai-search.js';
+     const d = document;
+     const e = d.createElement('script');
+     e.src = u;
+     e.id = 'psl-ai-srshsc';
+     d.body.appendChild(e);
+   })();
+   </script>
+   ```
+
+## 🏛️ Service Architecture
+
+### Backend API (`/backend`)
+- **Purpose**: Handles all business logic, data persistence, and API routing
+- **Technology**: Node.js + Express.js + MySQL
+- **Responsibilities**: 
+  - User management
+  - Search query processing
+  - AI search functionality
+  - Data persistence
+  - API security
+
+### Frontend Client (`/frontend`)  
+- **Purpose**: Provides user interface for both public and registered users
+- **Technology**: HTML5 + CSS3 + Vanilla JavaScript
+- **Responsibilities**:
+  - Public welcome page
+  - User dashboard
+  - Search interface
+  - API integration
+
+## 🧪 API Endpoints
 
 ### Users
 - `GET /api/users` - Get all users
-- `GET /api/users/:id` - Get user by ID
-- `POST /api/users` - Create new user
+- `GET /api/users/:id` - Get user by ID  
+- `POST /api/users` - Create user
 - `PUT /api/users/:id` - Update user
 - `DELETE /api/users/:id` - Delete user
-- `GET /api/users/stats` - Get user statistics
 
-### Search Queries
+### Search
 - `GET /api/search` - Get all search queries
-- `GET /api/search/:id` - Get search query by ID
-- `POST /api/search` - Create new search query
-- `DELETE /api/search/:id` - Delete search query
-- `GET /api/search/user/:userId` - Get search queries by user
-- `PUT /api/search/:id/results` - Update search results count
+- `POST /api/search` - Create search query
 - `GET /api/search/stats` - Get search statistics
 - `GET /api/search/popular` - Get popular search terms
 
+### AI Search Plugin
+- `POST /api/v1/psl-ai-search` - Handle plugin requests
+- `GET /api/v1/psl-ai-search/stats` - Get plugin statistics
+
 ### Utility
-- `GET /health` - Health check endpoint
+- `GET /health` - Health check
 - `GET /api` - API documentation
+
+## 🔧 Development
+
+### Project Structure
+- **Monorepo Root**: Contains workspace configuration and shared dependencies
+- **Backend Service**: Self-contained API server with all business logic
+- **Frontend Service**: Static web assets served by the backend
+
+### Database Setup
+The application works without a database for basic functionality. To enable full features:
+
+1. Install and start MySQL
+2. Create database: `ai_search_engine`
+3. Configure connection in `backend/.env`
+4. Tables are auto-created on startup
 
 ## 🗄️ Database Schema
 
@@ -174,39 +214,6 @@ CREATE TABLE search_queries (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
-```
-
-## 🏗️ Project Structure
-
-```
-ai-search-engine/
-├── src/
-│   ├── config/
-│   │   └── database.js          # Database configuration
-│   ├── controllers/
-│   │   ├── userController.js    # User-related operations
-│   │   └── searchController.js  # Search-related operations
-│   ├── middleware/
-│   │   ├── errorHandler.js      # Error handling middleware
-│   │   ├── rateLimiter.js       # Rate limiting configuration
-│   │   └── validation.js        # Input validation rules
-│   ├── models/
-│   │   ├── User.js             # User model
-│   │   └── SearchQuery.js      # Search query model
-│   └── routes/
-│       ├── users.js            # User routes
-│       └── search.js           # Search routes
-├── public/
-│   ├── css/
-│   │   └── style.css           # Custom styles
-│   └── js/
-│       └── app.js              # Frontend JavaScript
-├── views/
-│   └── index.html              # Main HTML page
-├── server.js                   # Main server file
-├── package.json               # Dependencies and scripts
-├── .env.example              # Environment variables template
-└── README.md                 # Project documentation
 ```
 
 ## 🔒 Security Features
