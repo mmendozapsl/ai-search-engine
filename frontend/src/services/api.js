@@ -134,5 +134,6 @@ class ApiClient {
     }
 }
 
-// Create global API client instance
+// Create and export API client instance
 const api = new ApiClient(API_BASE_URL);
+export default api;
