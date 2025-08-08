@@ -1,6 +1,6 @@
 # AI Search Engine - GitHub Copilot Instructions
 
-This is a Node.js + Express.js full-stack application with MySQL database connectivity that provides AI Search Engine tools to embed AI capabilities into web applications. It includes a RESTful API, a modern frontend interface, and robust security features.
+This is a Node.js + Express.js full-stack application with MySQL database connectivity that provides AI Search Engine tools to embed AI capabilities into web applications. It includes a RESTful API server, a modern frontend interface, and robust security features.
 
 Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
 
@@ -10,7 +10,7 @@ Always reference these instructions first and fallback to search or bash command
 - **Prerequisites**: Node.js v14+ and MySQL server are required
 - **Environment Setup**:
   ```bash
-  cp .env.example .env
+  cp backend/.env.example backend/.env
   ```
 - **MySQL Database Setup** (CRITICAL - Required for application to work):
   ```bash
