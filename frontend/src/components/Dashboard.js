@@ -137,18 +137,17 @@ function Dashboard() {
                     <div className="col-md-4">
                         <div className="card dashboard-card">
                             <div className="card-header">
-                                <h6 className="mb-0">🔧 System Status</h6>
+                                <h6 className="mb-0">🔧 Menu</h6>
                             </div>
                             <div className="card-body">
-                                <div className="status-item">
-                                    <span className={backendStatus.class}>{backendStatus.text}</span>
-                                </div>
-                                <div className="status-item mt-2">
-                                    <span className={authStatus.class}>{authStatus.text}</span>
-                                </div>
+                                <ul className="side-menu list-unstyled">
+                                    <li><a href="/dashboard">Home</a></li>
+                                    <li><a href="/create-search-plugin">Create Search Plugin</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
+                    
                     <div className="col-md-8">
                         <div className="card dashboard-card">
                             <div className="card-header">
@@ -171,6 +170,20 @@ e.id = 'psl-ai-srshsc';d.body.appendChild(e);
                             </div>
                         </div><br />
 
+                        <div className="card dashboard-card">
+                            <div className="card-header">
+                                <h6 className="mb-0">🔧 System Status</h6>
+                            </div>
+                            <div className="card-body">
+                                <div className="status-item">
+                                    <span className={backendStatus.class}>{backendStatus.text}</span>
+                                </div>
+                                <div className="status-item mt-2">
+                                    <span className={authStatus.class}>{authStatus.text}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
                         <div className="card dashboard-card">
                             <div className="card-header">
                                 <h5 className="mb-0">🚀 API Testing Dashboard</h5>
