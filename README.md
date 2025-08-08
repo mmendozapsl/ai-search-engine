@@ -1,6 +1,41 @@
-# AI Search Engine
+# Hackathon-2025: AI Semantic Search Engine
 
-A scalable full-stack application built with Node.js, Express.js, and MySQL that provides a foundation for an AI-powered search engine.
+An AI-powered Semantic Search Engine for CME platforms to search using natural language like:
+
+“Short videos on insulin titration for elderly patients”
+
+“CME on managing chronic kidney disease in diabetics”
+
+“Upcoming events on sepsis diagnosis”
+
+Instead of relying on rigid keyword matching, the engine will understand intent and medical context to return precise, relevant results.
+
+## Usage Example
+To embed the plugin on any website.
+
+1. Add elements with uid attributes:
+```
+<!-- Add elements with uid attributes -->
+<psl-ai-search uid="user-123"></psl-ai-search>
+<psl-ai-search uid="search-456"></psl-ai-search>
+```
+
+2. Include the plugin script
+* With the execution of an script (recomended):
+```
+<script>(function() {const u = 'http://{backendServer}/v1/embed/psl-ai-search.js';const d = document;const e = d.createElement('script');e.src = u;e.id = 'psl-ai-srshsc';d.body.appendChild(e);})();</script>
+```
+* Loading the script directly
+```
+<script src="https://{backendServer}/v1/embed/psl-ai-search.js"></script>
+```
+
+The plugin will automatically:
+
+1. Scan for psl-ai-search elements on page load
+2. Extract the uid from each element
+3. Send POST requests to /api/v1/psl-ai-search with the UID
+4. Emit custom events for successful processing
 
 ![AI Search Engine Interface](https://github.com/user-attachments/assets/fe2474bc-3f76-430a-beba-84a6ca487c85)
 

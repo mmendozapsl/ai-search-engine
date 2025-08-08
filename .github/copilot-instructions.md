@@ -1,6 +1,8 @@
 # AI Search Engine - GitHub Copilot Instructions
 
-This is a Node.js + Express.js full-stack application with MySQL database connectivity that provides a foundation for an AI-powered search engine. Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
+This is a Node.js + Express.js full-stack application with MySQL database connectivity that provides AI Search Engine tools to embed AI capabilities into web applications. It includes a RESTful API, a modern frontend interface, and robust security features.
+
+Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
 
 ## Working Effectively
 
