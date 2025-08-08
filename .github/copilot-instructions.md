@@ -1,215 +1,241 @@
 # AI Search Engine - GitHub Copilot Instructions
 
-This is a Node.js + Express.js full-stack application with MySQL database connectivity that provides AI Search Engine tools to embed AI capabilities into web applications. It includes a RESTful API server, a modern frontend interface, and robust security features.
+This is a Node.js + Express.js full-stack monorepo application with PostgreSQL and MySQL database connectivity that provides AI Search Engine tools to embed AI capabilities into web applications. It includes a RESTful API server, a separate frontend interface, and robust security features.
 
 Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
 
 ## Working Effectively
 
 ### Bootstrap and Setup
-- **Prerequisites**: Node.js v14+ and MySQL server are required
+- **Prerequisites**: Node.js v14+ and optionally PostgreSQL/MySQL servers
+- **Monorepo Structure**: Separate `backend/` and `frontend/` applications
 - **Environment Setup**:
   ```bash
   cp backend/.env.example backend/.env
   ```
-- **MySQL Database Setup** (CRITICAL - Required for application to work):
+- **Database Setup** (OPTIONAL - Application works without databases):
   ```bash
-  # Start MySQL service (if not running)
+  # PostgreSQL (for user management and posts)
+  sudo systemctl start postgresql
+  sudo -u postgres createdb ai_search_engine
+  
+  # MySQL (for product management)  
   sudo systemctl start mysql
+  sudo mysql -e "CREATE DATABASE IF NOT EXISTS ai_search_engine;"
   
-  # Create database using debian-sys-maint user (Ubuntu/Debian systems)
-  sudo mysql --defaults-file=/etc/mysql/debian.cnf -e "CREATE DATABASE IF NOT EXISTS ai_search_engine;"
-  
-  # Update .env file with correct MySQL credentials:
-  # For Ubuntu/Debian systems, use debian-sys-maint user from /etc/mysql/debian.cnf
-  # For other systems, use your MySQL root credentials
+  # Update backend/.env with correct database credentials
   ```
 
 ### Install Dependencies and Build
-- **Install**: `npm install` -- takes 8-10 seconds. NEVER CANCEL.
+- **Install All**: `npm run install:all` -- installs root, backend, and frontend dependencies (takes 30-60 seconds)
+- **Alternative**: `npm install && cd backend && npm install && cd ../frontend && npm install`
 - **IMPORTANT**: No separate build step required - this is a runtime application
 
 ### Run the Application
-- **Development mode**: `npm run dev` -- starts with nodemon for auto-restart
-- **Production mode**: `npm start` -- standard Node.js startup
-- **Startup time**: Both modes start in under 10 seconds. NEVER CANCEL.
+- **Development mode**: `npm run dev` -- runs both backend and frontend concurrently
+- **Production mode**: `npm start` -- runs backend only
+- **Backend only**: `npm run dev:backend` -- backend development mode
+- **Frontend only**: `npm run dev:frontend` -- frontend development mode
+- **Startup time**: Applications start in under 15 seconds. NEVER CANCEL.
 - **Application URLs**:
-  - Frontend: http://localhost:3000
+  - Frontend: http://localhost:3001 (separate http-server)
+  - Backend API: http://localhost:3000
   - Health Check: http://localhost:3000/health
   - API Documentation: http://localhost:3000/api
 
 ### Testing and Validation
-- **API Test Script**: `./test-api.sh` -- validates all endpoints
-- **No formal test suite**: Application uses `echo "Error: no test specified"` for npm test
+- **No API Test Script**: No automated test script found in current structure
+- **Manual Testing**: Use curl commands to test API endpoints
+- **No formal test suite**: Backend uses Jest but no tests implemented yet
 - **No linting configured**: No ESLint or other linting tools are set up
 
 ## Validation Scenarios
 
 ### CRITICAL: Always test these scenarios after making changes:
 1. **Health Check**: Verify `curl http://localhost:3000/health` returns success
-2. **Database Connectivity**: Check application logs show "Database connected successfully"
-3. **Frontend Interface**: Navigate to http://localhost:3000 and verify the interface loads
-4. **User Management**: Test user creation via POST to /api/users
-5. **Search Functionality**: Test search query creation via POST to /api/search
-6. **API Documentation**: Verify /api endpoint returns complete endpoint list
+2. **Database Connectivity**: Check application logs (databases are optional)
+3. **Frontend Interface**: Navigate to http://localhost:3001 and verify the interface loads
+4. **User Management**: Test user registration via POST to /api/auth/register
+5. **API Documentation**: Verify /api endpoint returns complete endpoint list
 
 ### Manual Testing Workflow:
 ```bash
-# 1. Start application
+# 1. Start both applications
 npm run dev
 
 # 2. Test health endpoint
 curl http://localhost:3000/health
 
-# 3. Create a test user
-curl -X POST -H "Content-Type: application/json" \
-  -d '{"name":"Test User","email":"test@example.com"}' \
-  http://localhost:3000/api/users
+# 3. Test API documentation
+curl http://localhost:3000/api
 
-# 4. Create a search query  
+# 4. Register a test user
 curl -X POST -H "Content-Type: application/json" \
-  -d '{"user_id":1,"query_text":"test search","results_count":50}' \
-  http://localhost:3000/api/search
+  -d '{"username":"testuser","email":"test@example.com","password":"test123"}' \
+  http://localhost:3000/api/auth/register
 
-# 5. Test frontend in browser at http://localhost:3000
+# 5. Test frontend in browser at http://localhost:3001
 ```
 
 ## Project Structure and Key Locations
 
-### Core Application Files
-- `server.js` - Main application entry point and Express.js setup
-- `package.json` - Dependencies and npm scripts (start, dev)
-- `.env` - Environment configuration (copy from .env.example)
+### Root Level (Monorepo)
+- `package.json` - Root package.json with workspace configuration and dev scripts
+- `backend/` - Express.js API server application
+- `frontend/` - Static HTML/CSS/JS frontend application
+- `.gitignore` - Git ignore rules for Node.js monorepo
 
-### Source Code Organization (`src/` directory)
-- `src/config/database.js` - MySQL database configuration and connection pooling
-- `src/controllers/` - Business logic controllers:
-  - `userController.js` - User CRUD operations
-  - `searchController.js` - Search query operations
-- `src/models/` - Database models:
-  - `User.js` - User data model
-  - `SearchQuery.js` - Search query data model
-- `src/routes/` - Express.js route definitions:
-  - `users.js` - User API routes (/api/users/*)
-  - `search.js` - Search API routes (/api/search/*)
-- `src/middleware/` - Express.js middleware:
-  - `errorHandler.js` - Centralized error handling
-  - `rateLimiter.js` - API rate limiting configuration
-  - `validation.js` - Input validation rules
+### Backend Application (`backend/` directory)
+- `backend/src/app.js` - Main application entry point and Express.js setup
+- `backend/package.json` - Backend dependencies and scripts (start, dev)
+- `backend/.env` - Environment configuration (copy from .env.example)
 
-### Frontend Files
-- `views/index.html` - Main HTML interface
-- `public/css/style.css` - Custom styles
-- `public/js/app.js` - Frontend JavaScript functionality
+### Backend Source Code Organization (`backend/src/` directory)
+- `backend/src/config/` - Database configurations:
+  - `postgresql.js` - PostgreSQL database configuration and connection pooling
+  - `mysql.js` - MySQL database configuration and connection pooling
+- `backend/src/controllers/` - Business logic controllers (files may vary)
+- `backend/src/routes/` - Express.js route definitions:
+  - `authRoutes.js` - Authentication routes (/api/auth/*)
+  - `userRoutes.js` - User management routes (/api/users/*)
+  - `productRoutes.js` - Product management routes (/api/products/*)
+  - `pluginRoutes.js` - Plugin embedding routes (/v1/embed/*)
+  - `pslAiSearchRoutes.js` - PSL AI Search routes (/api/v1/psl-ai-search)
+- `backend/src/middleware/` - Express.js middleware:
+  - `errorMiddleware.js` - Centralized error handling
+- `backend/src/plugins/` - Plugin-related functionality
 
-### Configuration Files
-- `.env.example` - Environment variables template
-- `.gitignore` - Git ignore rules for Node.js projects
-- `test-api.sh` - API testing script
+### Frontend Application (`frontend/` directory)
+- `frontend/index.html` - Main HTML interface
+- `frontend/package.json` - Frontend dependencies (http-server)
+- `frontend/css/style.css` - Custom styles
+- `frontend/js/app.js` - Frontend JavaScript functionality
+- `frontend/test-*.html` - Test pages for plugin functionality
 
 ## Common Development Tasks
 
 ### Environment Configuration
-The application requires these environment variables in `.env`:
+The backend application requires these environment variables in `backend/.env`:
 ```env
 # Server Configuration  
-PORT=3000
 NODE_ENV=development
+PORT=3000
+FRONTEND_URL=http://localhost:3001
 
-# Database Configuration (UPDATE THESE)
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=ai_search_engine
-DB_USER=your_mysql_user
-DB_PASSWORD=your_mysql_password
+# JWT Configuration
+JWT_SECRET=your_super_secret_jwt_key_here_change_in_production
+JWT_EXPIRES_IN=7d
 
-# Security
-JWT_SECRET=your-super-secret-jwt-key-here
+# PostgreSQL Configuration (Optional - for user management)
+PG_HOST=localhost
+PG_PORT=5432
+PG_DATABASE=ai_search_engine
+PG_USER=postgres
+PG_PASSWORD=password
 
-# Rate Limiting
-RATE_LIMIT_WINDOW_MS=900000
-RATE_LIMIT_MAX_REQUESTS=100
+# MySQL Configuration (Optional - for product management)
+MYSQL_HOST=127.0.0.1
+MYSQL_PORT=3306
+MYSQL_DATABASE=ai_search_engine
+MYSQL_USER=root
+MYSQL_PASSWORD=root
 ```
 
 ### Database Schema
-Tables are auto-created on application startup:
-- `users` table: id, name, email, created_at, updated_at
-- `search_queries` table: id, user_id, query_text, results_count, created_at
+Tables are auto-created on application startup (if databases are available):
+- PostgreSQL: `users`, `posts` tables 
+- MySQL: `users`, `products` tables
 
 ### API Endpoints Reference
 ```
+Health:
+- GET /health - Application health check
+
+Authentication:
+- POST /api/auth/register - User registration
+- POST /api/auth/login - User authentication
+
 Users:
 - GET /api/users - Get all users
 - GET /api/users/:id - Get user by ID  
-- POST /api/users - Create user (requires: name, email)
 - PUT /api/users/:id - Update user
 - DELETE /api/users/:id - Delete user
-- GET /api/users/stats - Get user statistics
 
-Search:
-- GET /api/search - Get all search queries
-- GET /api/search/:id - Get search query by ID
-- POST /api/search - Create search query (requires: query_text, optional: user_id, results_count)
-- DELETE /api/search/:id - Delete search query
-- GET /api/search/user/:userId - Get searches by user
-- PUT /api/search/:id/results - Update results count
-- GET /api/search/stats - Get search statistics
-- GET /api/search/popular - Get popular search terms
+Products:
+- GET /api/products - Get all products
+- GET /api/products/:id - Get product by ID
+- POST /api/products - Create product
+- PUT /api/products/:id - Update product
+- DELETE /api/products/:id - Delete product
+
+PSL AI Search:
+- POST /api/v1/psl-ai-search - Handle AI search requests
+
+Plugins:
+- GET /v1/embed/psl-ai-search.js - Get plugin embed script
 
 Utility:
-- GET /health - Health check
 - GET /api - API documentation
 ```
 
 ## Troubleshooting Common Issues
 
 ### Database Connection Issues
-- **Problem**: "Access denied for user 'root'@'localhost'"
-- **Solution**: Update `.env` with correct MySQL credentials or use debian-sys-maint user on Ubuntu/Debian systems
+- **Problem**: PostgreSQL or MySQL connection errors
+- **Solution**: Databases are optional - application will run without them. Update `backend/.env` with correct credentials if you want database functionality
 
 ### Application Won't Start
-- **Problem**: Port 3000 already in use
-- **Solution**: Change PORT in `.env` or stop conflicting process
+- **Problem**: Port 3000 or 3001 already in use
+- **Solution**: Change PORT in `backend/.env` or kill conflicting processes
 
 ### Frontend Not Loading
-- **Problem**: CSS/JS files blocked or not loading
-- **Solution**: This is normal in sandboxed environments; core functionality still works
+- **Problem**: Frontend not accessible at http://localhost:3001
+- **Solution**: Make sure both backend and frontend are running with `npm run dev`
 
-### MySQL Service Not Running
-- **Problem**: Database connection failed
-- **Solution**: Start MySQL service with `sudo systemctl start mysql`
+### Dependencies Installation Issues
+- **Problem**: npm install failures
+- **Solution**: Try `npm run install:all` or install each workspace separately
+
+### Concurrently Issues
+- **Problem**: Development mode not starting both applications
+- **Solution**: Install concurrently globally: `npm install -g concurrently`
 
 ## Security and Performance Notes
 
-- **Security**: Application includes Helmet, CORS, rate limiting, and input validation
-- **Performance**: Uses MySQL connection pooling for better database performance
+- **Security**: Application includes Helmet, CORS, JWT authentication, and input validation
+- **Performance**: Uses database connection pooling when databases are available
 - **Environment**: Configured for development by default; production settings available in code
-- **Error Handling**: Comprehensive error handling with stack traces in development mode
+- **Error Handling**: Comprehensive error handling with detailed error messages
+- **Databases**: Optional - application works without PostgreSQL/MySQL connections
 
 ## Development Best Practices
 
 ### Before Making Changes:
-1. Always run `npm run dev` to start in development mode
-2. Test the health endpoint: `curl http://localhost:3000/health`
-3. Verify database connectivity in application logs
+1. Always run `npm run install:all` to ensure all dependencies are installed
+2. Start development mode with `npm run dev`
+3. Test the health endpoint: `curl http://localhost:3000/health`
+4. Verify both frontend (3001) and backend (3000) are accessible
 
 ### After Making Changes:
-1. Test affected API endpoints manually
-2. Run `./test-api.sh` to validate all endpoints
-3. Test frontend functionality at http://localhost:3000
+1. Test affected API endpoints manually with curl
+2. Test frontend functionality at http://localhost:3001
+3. Test backend functionality at http://localhost:3000
 4. Verify no console errors in application logs
 
 ### Code Organization:
-- Follow the existing MVC pattern (models, views, controllers)
-- Add new routes in `src/routes/`
-- Add business logic in `src/controllers/`
-- Add database operations in `src/models/`
-- Add middleware in `src/middleware/`
+- **Backend**: Follow the existing structure in `backend/src/`
+- Add new routes in `backend/src/routes/`
+- Add business logic in `backend/src/controllers/`
+- Add database operations in `backend/src/config/`
+- Add middleware in `backend/src/middleware/`
+- **Frontend**: Add features in `frontend/` directory
 
 ## Important Notes
 
-- **No formal testing framework**: Manual testing required
-- **No linting configured**: Follow existing code style
-- **Database auto-initialization**: Tables are created automatically on startup
-- **AI functionality is simulated**: Replace with actual AI/ML services for production use
-- **Frontend uses CDNs**: Some external resources may not load in restricted environments
+- **Monorepo Structure**: Use workspace-aware commands or navigate to specific directories
+- **Database Independence**: Application runs without databases - they provide additional functionality
+- **Frontend Separation**: Frontend is a separate application on port 3001
+- **Plugin System**: Includes embeddable plugin functionality for external websites
+- **JWT Authentication**: Implements token-based authentication system
+- **No formal testing framework**: Manual testing required using curl and browser
+- **No linting configured**: Follow existing code style patterns
