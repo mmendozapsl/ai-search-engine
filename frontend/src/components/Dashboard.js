@@ -134,6 +134,21 @@ function Dashboard() {
 
                 {/* Main Content */}
                 <div className="row">
+                    <div className="col-md-4">
+                        <div className="card dashboard-card">
+                            <div className="card-header">
+                                <h6 className="mb-0">🔧 System Status</h6>
+                            </div>
+                            <div className="card-body">
+                                <div className="status-item">
+                                    <span className={backendStatus.class}>{backendStatus.text}</span>
+                                </div>
+                                <div className="status-item mt-2">
+                                    <span className={authStatus.class}>{authStatus.text}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className="col-md-8">
                         <div className="card dashboard-card">
                             <div className="card-header">
@@ -193,21 +208,7 @@ e.id = 'psl-ai-srshsc';d.body.appendChild(e);
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4">
-                        <div className="card dashboard-card">
-                            <div className="card-header">
-                                <h6 className="mb-0">🔧 System Status</h6>
-                            </div>
-                            <div className="card-body">
-                                <div className="status-item">
-                                    <span className={backendStatus.class}>{backendStatus.text}</span>
-                                </div>
-                                <div className="status-item mt-2">
-                                    <span className={authStatus.class}>{authStatus.text}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 {/* Response Display */}
