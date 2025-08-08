@@ -1,6 +1,6 @@
 # AI Search Engine
 
-An AI-powered Semantic Search Engine restructured as a monorepo with separate frontend and backend services. This project provides AI search capabilities for CME platforms using natural language queries like:
+An AI-powered Semantic Search Engine restructured with separate frontend and backend services. This project provides AI search capabilities for CME platforms using natural language queries like:
 
 "Short videos on insulin titration for elderly patients"
 
@@ -14,9 +14,10 @@ Instead of relying on rigid keyword matching, the engine will understand intent 
 
 ## 🏗️ Architecture
 
-This project follows a **monorepo architecture** with separate services:
+This project follows an **architecture** with separate services:
 
 ```
+/
 ├── backend/                  # Node.js + Express.js API server
 │   ├── src/
 │   │   ├── controllers/      # Business logic controllers
@@ -92,7 +93,7 @@ This project follows a **monorepo architecture** with separate services:
 
 ## 📦 Workspace Commands
 
-The monorepo uses npm workspaces for efficient dependency management:
+The project uses npm workspaces for efficient dependency management:
 
 ```bash
 # Start backend development server
@@ -179,7 +180,7 @@ To embed the AI search plugin on any website:
 ## 🔧 Development
 
 ### Project Structure
-- **Monorepo Root**: Contains workspace configuration and shared dependencies
+- **Root**: Contains workspace configuration and shared dependencies
 - **Backend Service**: Self-contained API server with all business logic
 - **Frontend Service**: Static web assets served by the backend
 
