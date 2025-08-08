@@ -163,30 +163,6 @@ async function getUsers() {
     }
 }
 
-function showDatabaseTest() {
-    const dbInfo = {
-        message: 'Database Connection Information',
-        databases: [
-            {
-                type: 'PostgreSQL',
-                purpose: 'User management and posts',
-                tables: ['users', 'posts'],
-                features: ['User authentication', 'User CRUD operations']
-            },
-            {
-                type: 'MySQL',
-                purpose: 'Product management',
-                tables: ['users', 'products'],
-                features: ['Product catalog', 'User products relationship']
-            }
-        ],
-        note: 'Both databases are configured but require actual database servers to be running for full functionality.'
-    };
-    
-    displayResponse(dbInfo);
-    showAlert('🗄️ Database configuration displayed!', 'info');
-}
-
 // Authentication handlers
 async function handleLogin(event) {
     event.preventDefault();
