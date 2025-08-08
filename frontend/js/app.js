@@ -8,9 +8,14 @@ const authButtons = document.getElementById('auth-buttons');
 const username = document.getElementById('username');
 const getUsersBtn = document.getElementById('get-users-btn');
 
+// Page elements
+const welcomePage = document.getElementById('welcome-page');
+const dashboardPage = document.getElementById('dashboard-page');
+
 // Initialize app
 document.addEventListener('DOMContentLoaded', function() {
     updateAuthUI();
+    updatePageView();
     testServerConnection();
     
     // Set up form handlers
@@ -18,23 +23,40 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('registerForm').addEventListener('submit', handleRegister);
 });
 
+// Update page view based on authentication status
+function updatePageView() {
+    if (api.isAuthenticated()) {
+        welcomePage.classList.add('d-none');
+        dashboardPage.classList.remove('d-none');
+    } else {
+        welcomePage.classList.remove('d-none');
+        dashboardPage.classList.add('d-none');
+    }
+}
+
 // Update authentication UI
 function updateAuthUI() {
     const user = api.getCurrentUser();
     
     if (api.isAuthenticated() && user) {
         userInfo.classList.remove('d-none');
+        userInfo.classList.add('d-flex');
         authButtons.classList.add('d-none');
         username.textContent = user.username;
         authStatus.textContent = 'Auth: Logged in';
         authStatus.className = 'badge bg-success';
-        getUsersBtn.disabled = false;
+        if (getUsersBtn) {
+            getUsersBtn.disabled = false;
+        }
     } else {
         userInfo.classList.add('d-none');
+        userInfo.classList.remove('d-flex');
         authButtons.classList.remove('d-none');
         authStatus.textContent = 'Auth: Not logged in';
         authStatus.className = 'badge bg-secondary';
-        getUsersBtn.disabled = true;
+        if (getUsersBtn) {
+            getUsersBtn.disabled = true;
+        }
     }
 }
 
@@ -179,6 +201,7 @@ async function handleLogin(event) {
         displayResponse(response);
         showAlert('🎉 Login successful!', 'success');
         updateAuthUI();
+        updatePageView(); // Switch to dashboard
         
         // Close modal
         const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
@@ -208,6 +231,7 @@ async function handleRegister(event) {
         displayResponse(response);
         showAlert('🎉 Registration successful!', 'success');
         updateAuthUI();
+        updatePageView(); // Switch to dashboard
         
         // Close modal
         const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
@@ -226,6 +250,7 @@ async function handleRegister(event) {
 function logout() {
     api.logout();
     updateAuthUI();
+    updatePageView(); // Switch to welcome page
     showAlert('👋 Logged out successfully!', 'info');
     displayResponse({ message: 'User logged out successfully' });
 }
