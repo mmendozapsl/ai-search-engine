@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSL AI Search Plugin - Alternative Loading Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .test-tag {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+        .log {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>PSL AI Search Plugin - Alternative Loading Method Test</h1>
+    
+    <div class="test-section">
+        <h2>Loading Method</h2>
+        <p>This page tests the alternative script loading method using the inline script:</p>
+        <div class="test-tag">
+            (function() {const u = 'https://{website}/tools/v1/embed/psl-ai-search.js';const d = document;const e = d.createElement('script');e.src = u;e.id = 'psl-ai-srshsc';d.body.appendChild(e);})();
+        </div>
+        <p>Adapted for localhost testing:</p>
+        <div class="test-tag">
+            (function() {const u = 'http://localhost:3000/tools/v1/embed/psl-ai-search.js';const d = document;const e = d.createElement('script');e.src = u;e.id = 'psl-ai-srshsc';d.body.appendChild(e);})();
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Tags</h2>
+        <p>Testing both valid and invalid PSL AI Search tags:</p>
+        <div class="test-tag">
+            &lt;psl-ai-search uid="alternative-test-123"&gt;&lt;/psl-ai-search&gt;<br>
+            &lt;psl-ai-search uid="alternative-test-456"&gt;&lt;/psl-ai-search&gt;<br>
+            &lt;psl-ai-search&gt;&lt;/psl-ai-search&gt; (should be ignored)
+        </div>
+        <psl-ai-search uid="alternative-test-123"></psl-ai-search>
+        <psl-ai-search uid="alternative-test-456"></psl-ai-search>
+        <psl-ai-search></psl-ai-search>
+    </div>
+
+    <div class="test-section">
+        <h2>Plugin Status</h2>
+        <div id="status" class="status">Checking plugin status...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>Console Log</h2>
+        <div id="log" class="log">Loading...</div>
+    </div>
+
+    <script>
+        // Override console.log to capture messages
+        const originalLog = console.log;
+        const originalError = console.error;
+        const logElement = document.getElementById('log');
+        const statusElement = document.getElementById('status');
+        let logMessages = [];
+
+        function addToLog(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const formattedMessage = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+            logMessages.push(formattedMessage);
+            updateLogDisplay();
+        }
+
+        function updateLogDisplay() {
+            logElement.textContent = logMessages.join('\n');
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        function updateStatus(message, isError = false) {
+            statusElement.textContent = message;
+            statusElement.className = 'status ' + (isError ? 'error' : 'success');
+        }
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToLog(args.join(' '), 'log');
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToLog(args.join(' '), 'error');
+        };
+
+        // Listen for plugin events
+        document.addEventListener('psl-ai-search-response', function(event) {
+            addToLog(`Plugin response for UID ${event.detail.uid}: ${JSON.stringify(event.detail.response)}`);
+        });
+
+        document.addEventListener('psl-ai-search-error', function(event) {
+            addToLog(`Plugin error for UID ${event.detail.uid}: ${event.detail.error.message}`, 'error');
+        });
+
+        // Check plugin status after a delay
+        setTimeout(() => {
+            if (window.PSLAISearchPlugin) {
+                updateStatus(`✅ Plugin loaded successfully! Version: ${window.PSLAISearchPlugin.version}`);
+                addToLog('Plugin loaded and ready');
+            } else {
+                updateStatus('❌ Plugin failed to load', true);
+                addToLog('Plugin not detected', 'error');
+            }
+        }, 2000);
+
+        // Initialize log
+        addToLog('Test page loaded with alternative script loading method');
+    </script>
+
+    <!-- Load the PSL AI Search plugin using the alternative method -->
+    <script>
+        (function() {
+            const u = 'http://localhost:3000/tools/v1/embed/psl-ai-search.js';
+            const d = document;
+            const e = d.createElement('script');
+            e.src = u;
+            e.id = 'psl-ai-srshsc';
+            d.body.appendChild(e);
+        })();
+    </script>
+</body>
+</html>
