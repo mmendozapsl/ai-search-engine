@@ -3,91 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Semantic Search Engine - Application </title>
+    <title>AI Search Engine - Frontend AI Tool</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="#">📱 AI Semantic Search Engine</a>
-            <div class="navbar-nav ms-auto">
-                <div id="user-info" class="d-none">
-                    <span class="navbar-text me-3">Welcome, <span id="username"></span>!</span>
-                    <button class="btn btn-outline-light btn-sm" onclick="logout()">Logout</button>
+    <!-- Header for both welcome and dashboard -->
+    <header class="main-header">
+        <div class="container-fluid px-4">
+            <div class="d-flex justify-content-between align-items-center py-3">
+                <div class="logo">
+                    <a href="#" class="text-decoration-none text-light">
+                        <h3 class="mb-0 fw-bold">AI Search Engine</h3>
+                    </a>
                 </div>
-                <div id="auth-buttons">
-                    <button class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+                <nav class="header-nav">
+                    <div class="d-flex align-items-center gap-3">
+                        <a href="#" class="nav-link text-light">Documentation</a>
+                        <a href="#" class="nav-link text-light">Plugins</a>
+                        
+                        <!-- User info when logged in -->
+                        <div id="user-info" class="d-none align-items-center gap-3">
+                            <span class="text-light">Welcome, <span id="username"></span>!</span>
+                            <button class="btn btn-outline-light btn-sm" onclick="logout()">Logout</button>
+                        </div>
+                        
+                        <!-- Auth buttons when not logged in -->
+                        <div id="auth-buttons" class="d-flex align-items-center gap-2">
+                            <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                            <button class="btn btn-gradient" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                ⋯
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Help</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">About</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Welcome Page (shown when not logged in) -->
+    <main id="welcome-page" class="welcome-page">
+        <div class="container-fluid h-100">
+            <div class="row h-100 align-items-center justify-content-center">
+                <div class="col-lg-8 col-xl-6 text-center">
+                    <h1 class="welcome-title mb-4">AI Search Engine On Your Web App</h1>
+                    <p class="welcome-subtitle mb-5">Frontend AI tool powering the next generation of web applications.</p>
+                    
+                    <div class="welcome-buttons">
+                        <button class="btn btn-gradient btn-lg me-3 mb-3" data-bs-toggle="modal" data-bs-target="#registerModal">
+                            Register
+                        </button>
+                        <button class="btn btn-outline-light btn-lg mb-3" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            Login
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </nav>
+    </main>
 
-    <div class="container mt-4">
-        <!-- Status Alert -->
-        <div id="alert-container"></div>
+    <!-- Dashboard Page (shown when logged in) -->
+    <main id="dashboard-page" class="dashboard-page d-none">
+        <div class="container mt-4">
+            <!-- Status Alert -->
+            <div id="alert-container"></div>
 
-        <!-- Main Content -->
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">🚀 API Testing Dashboard</h5>
+            <!-- Main Content -->
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card dashboard-card">
+                        <div class="card-header">
+                            <h5 class="mb-0">🚀 API Testing Dashboard</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <button class="btn btn-info w-100" onclick="testHealth()">
+                                        🔍 Test Server Health
+                                    </button>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <button class="btn btn-secondary w-100" onclick="getApiInfo()">
+                                        📖 Get API Documentation
+                                    </button>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <button class="btn btn-success w-100" onclick="getUsers()" id="get-users-btn">
+                                        👥 Get All Users
+                                    </button>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <button class="btn btn-warning w-100" onclick="showDatabaseTest()">
+                                        🗄️ Test Database Connections
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <button class="btn btn-info w-100" onclick="testHealth()">
-                                    🔍 Test Server Health
-                                </button>
+                </div>
+                <div class="col-md-4">
+                    <div class="card dashboard-card">
+                        <div class="card-header">
+                            <h6 class="mb-0">🔧 System Status</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="status-item">
+                                <span class="badge bg-secondary" id="backend-status">Backend: Unknown</span>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <button class="btn btn-secondary w-100" onclick="getApiInfo()">
-                                    📖 Get API Documentation
-                                </button>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <button class="btn btn-success w-100" onclick="getUsers()" id="get-users-btn" disabled>
-                                    👥 Get All Users
-                                </button>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <button class="btn btn-warning w-100" onclick="showDatabaseTest()">
-                                    🗄️ Test Database Connections
-                                </button>
+                            <div class="status-item mt-2">
+                                <span class="badge bg-secondary" id="auth-status">Auth: Not logged in</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h6 class="mb-0">🔧 System Status</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="status-item">
-                            <span class="badge bg-secondary" id="backend-status">Backend: Unknown</span>
-                        </div>
-                        <div class="status-item mt-2">
-                            <span class="badge bg-secondary" id="auth-status">Auth: Not logged in</span>
-                        </div>
-                    </div>
+
+            <!-- Response Display -->
+            <div class="card dashboard-card mt-4">
+                <div class="card-header">
+                    <h6 class="mb-0">📄 API Response</h6>
+                </div>
+                <div class="card-body">
+                    <pre id="response-display" class="bg-light p-3 rounded">No response yet. Click a button above to test the API.</pre>
                 </div>
             </div>
         </div>
-
-        <!-- Response Display -->
-        <div class="card mt-4">
-            <div class="card-header">
-                <h6 class="mb-0">📄 API Response</h6>
-            </div>
-            <div class="card-body">
-                <pre id="response-display" class="bg-light p-3 rounded">No response yet. Click a button above to test the API.</pre>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <!-- Login Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1">
