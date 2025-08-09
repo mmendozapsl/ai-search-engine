@@ -74,6 +74,7 @@ class MySQLDatabase {
           type VARCHAR(100) NOT NULL,
           uid VARCHAR(32) NOT NULL,
           settings JSON,
+          context LONGTEXT,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           UNIQUE KEY unique_type_uid (type, uid)
@@ -113,7 +114,8 @@ class MySQLDatabase {
             placeholder: 'Search in CME program',
             title: 'AI Search',
             submitText: 'Search'
-          })
+          }),
+          context: 'You are an AI assistant helping users search through medical education content. Focus on providing accurate, relevant CME (Continuing Medical Education) information.'
         },
         {
           type: 'psl-ai-search',
@@ -123,7 +125,8 @@ class MySQLDatabase {
             placeholder: 'Find medical content...',
             title: 'Medical Search',
             submitText: 'Find Results'
-          })
+          }),
+          context: 'You are a medical search assistant. Help users find relevant medical content, research papers, and clinical guidelines. Prioritize evidence-based information.'
         },
         {
           type: 'psl-ai-search',
@@ -133,7 +136,8 @@ class MySQLDatabase {
             placeholder: 'Quick search',
             title: 'Quick Search',
             submitText: 'Go'
-          })
+          }),
+          context: 'You are a quick search assistant. Provide concise, relevant answers to user queries about medical and educational content.'
         },
         {
           type: 'psl-ai-search',
@@ -143,7 +147,8 @@ class MySQLDatabase {
             placeholder: 'Search CME activities and resources',
             title: 'Professional Search',
             submitText: 'Search CME'
-          })
+          }),
+          context: 'You are a professional medical education assistant. Help healthcare professionals find CME activities, accredited courses, and professional development resources.'
         },
         {
           type: 'psl-ai-search',
@@ -153,15 +158,16 @@ class MySQLDatabase {
             placeholder: 'Enter your search query',
             title: 'Search',
             submitText: 'Submit'
-          })
+          }),
+          context: 'You are a general search assistant. Help users find information across various topics with clear, accurate responses.'
         }
       ];
 
       for (const plugin of demoPlugins) {
         await this.query(`
-          INSERT INTO plugins (type, uid, settings) 
-          VALUES (?, ?, ?)
-        `, [plugin.type, plugin.uid, plugin.settings]);
+          INSERT INTO plugins (type, uid, settings, context) 
+          VALUES (?, ?, ?, ?)
+        `, [plugin.type, plugin.uid, plugin.settings, plugin.context]);
       }
 
       console.log('✅ Demo plugin data inserted successfully');
