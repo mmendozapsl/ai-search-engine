@@ -10,6 +10,7 @@ const SearchPlugin = () => {
     const [plugin, setPlugin] = useState({
         type: 'psl-ai-search',
         uid: '',
+        context: '',
         settings: {
             theme: 'default',
             title: 'AI Search',
@@ -60,7 +61,7 @@ const SearchPlugin = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'uid' || name === 'type') {
+        if (name === 'uid' || name === 'type' || name === 'context') {
             setPlugin(prev => ({
                 ...prev,
                 [name]: value
@@ -94,6 +95,7 @@ const SearchPlugin = () => {
                 setPlugin({
                     type: 'psl-ai-search',
                     uid: '',
+                    context: '',
                     settings: {
                         theme: 'default',
                         title: 'AI Search',
@@ -200,6 +202,22 @@ const SearchPlugin = () => {
                                 </div>
 
                                 <div className="mb-3">
+                                    <label htmlFor="context" className="form-label">Context</label>
+                                    <textarea
+                                        className="form-control"
+                                        id="context"
+                                        name="context"
+                                        rows="4"
+                                        value={plugin.context}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter the AI context or instructions for this plugin (e.g., 'You are an AI assistant helping users search through medical education content.')"
+                                    />
+                                    <div className="form-text">
+                                        Provide context or instructions that guide the AI's behavior for this plugin
+                                    </div>
+                                </div>
+
+                                <div className="mb-3">
                                     <label htmlFor="theme" className="form-label">Theme</label>
                                     <select
                                         className="form-control"
@@ -297,6 +315,11 @@ const SearchPlugin = () => {
                                                 <p className="mb-1 small text-muted">
                                                     UID: {p.uid} | Theme: {p.settings.theme}
                                                 </p>
+                                                {p.context && (
+                                                    <p className="mb-1 small text-muted">
+                                                        Context: {p.context.length > 50 ? p.context.substring(0, 50) + '...' : p.context}
+                                                    </p>
+                                                )}
                                                 <small className="text-muted">
                                                     Created: {new Date(p.created_at).toLocaleDateString()}
                                                 </small>
