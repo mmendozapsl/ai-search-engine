@@ -266,7 +266,7 @@
             <style id="psl-ai-search-styles">
                 .psl-ai-search-container {
                     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                    max-width: 500px;
+                    max-width: 900px;
                     margin: 20px 0;
                     padding: 20px;
                     border: 1px solid #ddd;

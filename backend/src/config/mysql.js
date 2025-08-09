@@ -115,7 +115,26 @@ class MySQLDatabase {
             title: 'AI Search',
             submitText: 'Search'
           }),
-          context: 'You are an AI assistant helping users search through medical education content. Focus on providing accurate, relevant CME (Continuing Medical Education) information.'
+          context: JSON.stringify([
+            {
+              "title": "Advanced Cancer Treatment Options",
+              "description": "Comprehensive guide to modern cancer treatment approaches including immunotherapy, targeted therapy, and precision medicine",
+              "url": "https://medical-education.com/cancer-treatment-guide",
+              "tags": ["cancer", "treatment", "immunotherapy", "oncology", "precision-medicine"]
+            },
+            {
+              "title": "CME: Cardiovascular Disease Prevention",
+              "description": "Continuing Medical Education course covering prevention strategies for cardiovascular disease in primary care",
+              "url": "https://cme-provider.com/cardio-prevention",
+              "tags": ["cardiovascular", "prevention", "cme", "primary-care", "heart-disease"]
+            },
+            {
+              "title": "Diabetes Management in Clinical Practice",
+              "description": "Evidence-based approaches to diabetes management including medication selection and lifestyle interventions",
+              "url": "https://medical-education.com/diabetes-management",
+              "tags": ["diabetes", "management", "clinical-practice", "medication", "lifestyle"]
+            }
+          ])
         },
         {
           type: 'psl-ai-search',
@@ -126,7 +145,26 @@ class MySQLDatabase {
             title: 'Medical Search',
             submitText: 'Find Results'
           }),
-          context: 'You are a medical search assistant. Help users find relevant medical content, research papers, and clinical guidelines. Prioritize evidence-based information.'
+          context: JSON.stringify([
+            {
+              "title": "Latest Medical Research Publications",
+              "description": "Access to the latest peer-reviewed medical research and clinical studies",
+              "url": "https://medical-research.com/latest-publications",
+              "tags": ["research", "publications", "clinical-studies", "peer-reviewed", "medical"]
+            },
+            {
+              "title": "Clinical Guidelines for Emergency Medicine",
+              "description": "Evidence-based clinical guidelines for emergency medicine practitioners",
+              "url": "https://emergency-medicine.com/guidelines",
+              "tags": ["emergency-medicine", "clinical-guidelines", "evidence-based", "practitioners"]
+            },
+            {
+              "title": "Pharmacology Updates for Healthcare Providers",
+              "description": "Latest updates in pharmacology and drug interactions for healthcare providers",
+              "url": "https://pharma-education.com/updates",
+              "tags": ["pharmacology", "drug-interactions", "healthcare-providers", "medications"]
+            }
+          ])
         },
         {
           type: 'psl-ai-search',
@@ -137,7 +175,20 @@ class MySQLDatabase {
             title: 'Quick Search',
             submitText: 'Go'
           }),
-          context: 'You are a quick search assistant. Provide concise, relevant answers to user queries about medical and educational content.'
+          context: JSON.stringify([
+            {
+              "title": "Quick Medical Reference Guide",
+              "description": "Fast access to essential medical information and quick reference materials",
+              "url": "https://quick-medical-ref.com/guide",
+              "tags": ["quick-reference", "medical-information", "essential", "fast-access"]
+            },
+            {
+              "title": "Diagnostic Procedures Overview",
+              "description": "Comprehensive overview of common diagnostic procedures and their applications",
+              "url": "https://diagnostic-procedures.com/overview",
+              "tags": ["diagnostic", "procedures", "medical-tests", "clinical-diagnosis"]
+            }
+          ])
         },
         {
           type: 'psl-ai-search',
@@ -148,7 +199,26 @@ class MySQLDatabase {
             title: 'Professional Search',
             submitText: 'Search CME'
           }),
-          context: 'You are a professional medical education assistant. Help healthcare professionals find CME activities, accredited courses, and professional development resources.'
+          context: JSON.stringify([
+            {
+              "title": "Accredited CME Programs for Physicians",
+              "description": "High-quality accredited continuing medical education programs for practicing physicians",
+              "url": "https://cme-accredited.com/physicians",
+              "tags": ["cme", "accredited", "physicians", "continuing-education", "professional-development"]
+            },
+            {
+              "title": "Board Certification Review Courses",
+              "description": "Comprehensive review courses for medical board certification and recertification",
+              "url": "https://board-cert-review.com/courses",
+              "tags": ["board-certification", "review-courses", "recertification", "medical-boards"]
+            },
+            {
+              "title": "Professional Development for Healthcare Workers",
+              "description": "Career advancement and professional development resources for healthcare professionals",
+              "url": "https://healthcare-professional-dev.com/resources",
+              "tags": ["professional-development", "healthcare-workers", "career-advancement", "resources"]
+            }
+          ])
         },
         {
           type: 'psl-ai-search',
@@ -159,7 +229,26 @@ class MySQLDatabase {
             title: 'Search',
             submitText: 'Submit'
           }),
-          context: 'You are a general search assistant. Help users find information across various topics with clear, accurate responses.'
+          context: JSON.stringify([
+            {
+              "title": "General Health Information Hub",
+              "description": "Reliable health information and medical knowledge for general audiences",
+              "url": "https://health-info-hub.com/general",
+              "tags": ["health-information", "medical-knowledge", "general-health", "reliable"]
+            },
+            {
+              "title": "Medical Encyclopedia and Dictionary",
+              "description": "Comprehensive medical encyclopedia with definitions and explanations",
+              "url": "https://medical-encyclopedia.com/dictionary",
+              "tags": ["medical-encyclopedia", "dictionary", "definitions", "medical-terms"]
+            },
+            {
+              "title": "Health and Wellness Resources",
+              "description": "Resources for maintaining health and wellness across different life stages",
+              "url": "https://wellness-resources.com/health",
+              "tags": ["health", "wellness", "resources", "life-stages", "preventive-care"]
+            }
+          ])
         }
       ];
 
