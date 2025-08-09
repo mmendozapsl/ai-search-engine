@@ -144,11 +144,11 @@ const SearchPlugin = () => {
     ];
 
     if (loading && isEditMode) {
-        return <div className="container mt-4"><div className="text-center">Loading...</div></div>;
+        return <div className="container mt-4 search-plugin-page"><div className="text-center">Loading...</div></div>;
     }
 
     return (
-        <div className="container mt-4">
+        <div className="container mt-4 search-plugin-page">
             <div className="row">
                 <div className="col-md-8">
                     <div className="card">

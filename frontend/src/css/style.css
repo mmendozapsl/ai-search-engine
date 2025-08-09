@@ -401,3 +401,188 @@ html, body {
 .side-menu li a:hover i {
     opacity: 1;
 }
+
+/* Search Plugin Component Styling */
+.search-plugin-page {
+    background: transparent;
+    color: #e0e0e0;
+}
+
+.search-plugin-page .card {
+    background: rgba(30, 30, 50, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.search-plugin-page .card-header {
+    background: rgba(79, 172, 254, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.search-plugin-page .card-header h3,
+.search-plugin-page .card-header h5 {
+    color: #ffffff;
+    font-weight: 600;
+    margin: 0;
+}
+
+.search-plugin-page .card-body {
+    background: rgba(20, 20, 40, 0.8);
+    color: #e0e0e0;
+}
+
+/* Form styling for search plugin */
+.search-plugin-page .form-label {
+    color: #ffffff;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.search-plugin-page .form-control,
+.search-plugin-page .form-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+}
+
+.search-plugin-page .form-control:focus,
+.search-plugin-page .form-select:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(79, 172, 254, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(79, 172, 254, 0.25);
+    color: #ffffff;
+}
+
+.search-plugin-page .form-control::placeholder {
+    color: #a0a0a0;
+}
+
+.search-plugin-page .form-text {
+    color: #b0b0b0;
+    font-size: 0.875rem;
+}
+
+/* Button styling for search plugin */
+.search-plugin-page .btn-primary {
+    background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.search-plugin-page .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+}
+
+.search-plugin-page .btn-primary:disabled {
+    opacity: 0.6;
+    transform: none;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.2);
+}
+
+.search-plugin-page .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.search-plugin-page .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.search-plugin-page .btn-outline-primary {
+    background: transparent;
+    border: 1px solid rgba(79, 172, 254, 0.5);
+    color: #4facfe;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.search-plugin-page .btn-outline-primary:hover {
+    background: rgba(79, 172, 254, 0.1);
+    border-color: rgba(79, 172, 254, 0.8);
+    color: #ffffff;
+}
+
+.search-plugin-page .btn-outline-danger {
+    background: transparent;
+    border: 1px solid rgba(220, 53, 69, 0.5);
+    color: #dc3545;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.search-plugin-page .btn-outline-danger:hover {
+    background: rgba(220, 53, 69, 0.1);
+    border-color: rgba(220, 53, 69, 0.8);
+    color: #ffffff;
+}
+
+/* Alert styling for search plugin */
+.search-plugin-page .alert-danger {
+    background: rgba(220, 53, 69, 0.15);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    color: #ff6b7a;
+    border-radius: 8px;
+}
+
+.search-plugin-page .alert-success {
+    background: rgba(25, 135, 84, 0.15);
+    border: 1px solid rgba(25, 135, 84, 0.3);
+    color: #75d487;
+    border-radius: 8px;
+}
+
+/* List group styling for existing plugins */
+.search-plugin-page .list-group-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.search-plugin-page .list-group-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(79, 172, 254, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.search-plugin-page .list-group-item h6 {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.search-plugin-page .list-group-item .text-muted {
+    color: #a0a0a0 !important;
+}
+
+.search-plugin-page .text-muted {
+    color: #a0a0a0 !important;
+}
+
+/* Loading state */
+.search-plugin-page .text-center {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+}

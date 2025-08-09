@@ -142,7 +142,7 @@ function Dashboard() {
                             <div className="card-body">
                                 <ul className="side-menu list-unstyled">
                                     <li><a href="/dashboard">Home</a></li>
-                                    <li><a href="/create-search-plugin">Create Search Plugin</a></li>
+                                    <li><a href="/search-plugin">Plugins</a></li>
                                 </ul>
                             </div>
                         </div>
