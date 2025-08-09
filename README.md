@@ -143,8 +143,8 @@ cp .env.example .env
 npm run dev
 
 # OR start individually
-npm run dev:backend  # Backend on http://localhost:3000
-npm run dev:frontend # Frontend on http://localhost:3001
+npm run dev:backend  # Backend on http://localhost:3001
+npm run dev:frontend # Frontend on http://localhost:3000
 ```
 
 ## 🔑 Environment Variables
@@ -154,8 +154,8 @@ Create a `.env` file in the `backend` directory:
 ```env
 # Server Configuration
 NODE_ENV=development
-PORT=3000
-FRONTEND_URL=http://localhost:3001
+PORT=3001
+FRONTEND_URL=http://localhost:3000
 
 # JWT Configuration
 JWT_SECRET=your_super_secret_jwt_key_here
@@ -196,7 +196,7 @@ MYSQL_PASSWORD=your_password
 
 #### Register User
 ```bash
-curl -X POST http://localhost:3000/api/auth/register \
+curl -X POST http://localhost:3001/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "username": "johndoe",
@@ -207,7 +207,7 @@ curl -X POST http://localhost:3000/api/auth/register \
 
 #### Login
 ```bash
-curl -X POST http://localhost:3000/api/auth/login \
+curl -X POST http://localhost:3001/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "john@example.com",
@@ -217,7 +217,7 @@ curl -X POST http://localhost:3000/api/auth/login \
 
 #### Get Users (Protected)
 ```bash
-curl -X GET http://localhost:3000/api/users \
+curl -X GET http://localhost:3001/api/users \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
@@ -319,7 +319,7 @@ The application includes:
 
 To test manually:
 1. Start the application: `npm run dev`
-2. Open http://localhost:3001
+2. Open http://localhost:3000
 3. Use the testing dashboard to interact with the API
 
 ## 🚀 Deployment
@@ -341,7 +341,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --only=production
 COPY . .
-EXPOSE 3000
+EXPOSE 3001
 CMD ["npm", "start"]
 ```
 
