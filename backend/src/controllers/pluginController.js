@@ -5,7 +5,7 @@ class PluginController {
   static async getAllPlugins(req, res) {
     try {
       const { rows } = await mysqlDb.query(`
-        SELECT id, type, uid, settings, created_at, updated_at 
+        SELECT id, type, uid, settings, context, created_at, updated_at 
         FROM plugins 
         ORDER BY created_at DESC
       `);
@@ -30,7 +30,7 @@ class PluginController {
     try {
       const { id } = req.params;
       const { rows } = await mysqlDb.query(`
-        SELECT id, type, uid, settings, created_at, updated_at 
+        SELECT id, type, uid, settings, context, created_at, updated_at 
         FROM plugins 
         WHERE id = ?
       `, [id]);
@@ -60,7 +60,7 @@ class PluginController {
   // Create new plugin
   static async createPlugin(req, res) {
     try {
-      const { type, uid, settings } = req.body;
+      const { type, uid, settings, context } = req.body;
 
       // Validate required fields
       if (!type || !uid) {
@@ -84,13 +84,13 @@ class PluginController {
 
       // Insert new plugin
       const { rows } = await mysqlDb.query(`
-        INSERT INTO plugins (type, uid, settings) 
-        VALUES (?, ?, ?)
-      `, [type, uid, JSON.stringify(settings || {})]);
+        INSERT INTO plugins (type, uid, settings, context) 
+        VALUES (?, ?, ?, ?)
+      `, [type, uid, JSON.stringify(settings || {}), context || '']);
 
       // Get the created plugin
       const { rows: newPlugin } = await mysqlDb.query(`
-        SELECT id, type, uid, settings, created_at, updated_at 
+        SELECT id, type, uid, settings, context, created_at, updated_at 
         FROM plugins 
         WHERE id = ?
       `, [rows.insertId]);
@@ -114,7 +114,7 @@ class PluginController {
   static async updatePlugin(req, res) {
     try {
       const { id } = req.params;
-      const { type, uid, settings } = req.body;
+      const { type, uid, settings, context } = req.body;
 
       // Check if plugin exists
       const { rows: existing } = await mysqlDb.query(`
@@ -131,13 +131,13 @@ class PluginController {
       // Update plugin
       await mysqlDb.query(`
         UPDATE plugins 
-        SET type = ?, uid = ?, settings = ?, updated_at = CURRENT_TIMESTAMP
+        SET type = ?, uid = ?, settings = ?, context = ?, updated_at = CURRENT_TIMESTAMP
         WHERE id = ?
-      `, [type, uid, JSON.stringify(settings || {}), id]);
+      `, [type, uid, JSON.stringify(settings || {}), context || '', id]);
 
       // Get the updated plugin
       const { rows: updatedPlugin } = await mysqlDb.query(`
-        SELECT id, type, uid, settings, created_at, updated_at 
+        SELECT id, type, uid, settings, context, created_at, updated_at 
         FROM plugins 
         WHERE id = ?
       `, [id]);
