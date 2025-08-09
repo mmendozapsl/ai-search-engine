@@ -159,14 +159,19 @@ function Dashboard() {
                                 <p className="card-text text-muted mb-3">2. Copy the code snippet and paste it into your HTML.</p>
                                 <div className="code-snippet-body">
                                     <pre style={{backgroundColor: '#0000003d', color: '#fff', padding: '7px', fontSize: '12px', border: '1px solid #9cc9d2'}}>
-{`<psl-ai-search uid="search-456"></psl-ai-search>
+{`<psl-ai-search uid="search-uid-456"></psl-ai-search>
 <script>(function() {
-const u = 'http://{backendServer}/v1/embed/psl-ai-search.js';
+const u = 'http://localhost:3001/v1/embed/psl-ai-search.js';
 const d = document;const e = d.createElement('script');e.src = u;
 e.id = 'psl-ai-srshsc';d.body.appendChild(e);
 })();</script>`}
                                     </pre>
                                 </div>
+                                <p className="card-text text-muted mb-3">3. Ensure to have the uid of the plugin in the code: 
+                                    <pre style={{backgroundColor: '#0000003d', color: '#fff', padding: '7px', fontSize: '12px', border: '1px solid #9cc9d2'}}>
+                                    {`<psl-ai-search uid="plugin-uid"></psl-ai-search>`}
+                                    </pre>
+                                </p>
                             </div>
                         </div><br />
 

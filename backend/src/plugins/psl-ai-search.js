@@ -266,7 +266,6 @@
             <style id="psl-ai-search-styles">
                 .psl-ai-search-container {
                     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                    max-width: 900px;
                     margin: 20px 0;
                     padding: 20px;
                     border: 1px solid #ddd;
@@ -283,6 +282,12 @@
                 .psl-ai-search-container[data-theme="compact"] {
                     padding: 10px;
                     margin: 10px 0;
+                }
+
+                .psl-ai-search-container[data-theme="simple"] {
+                    border: none;
+                    padding: 0px;
+                    margin: 0px 0;
                 }
                 
                 .psl-search-title {

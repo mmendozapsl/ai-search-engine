@@ -58,6 +58,8 @@ const performAISearch = async (query, contextData) => {
     
     // Get the search prompt
     const prompt = await getSearchPrompt(query, parsedContext);
+
+    console.log('[DEV: IA PROMPT]'+prompt);
     
     // Call OpenAI API
     const completion = await client.chat.completions.create({
@@ -73,10 +75,12 @@ const performAISearch = async (query, contextData) => {
         }
       ],
       temperature: 0.1,
-      max_tokens: 2000,
+      max_tokens: 4000,
     });
     
     const response = completion.choices[0].message.content.trim();
+
+    console.log('[DEV: IA RESPONSE]'+response);
     
     // Parse the JSON response
     let searchResults;
