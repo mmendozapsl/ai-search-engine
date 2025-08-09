@@ -36,7 +36,7 @@ function Header() {
                     <nav className="header-nav">
                         <div className="d-flex align-items-center gap-3">
                             <a href="#" className="nav-link text-light">Documentation</a>
-                            <a href="#" className="nav-link text-light">Plugins</a>
+                            <Link to="/search-plugin" className="nav-link text-light">Search Plugins</Link>
                             
                             {/* User info when logged in */}
                             {isAuthenticated && user && (

@@ -132,6 +132,27 @@ class ApiClient {
     async deleteUser(id) {
         return this.delete(`/api/users/${id}`);
     }
+
+    // Plugin endpoints
+    async getPlugins() {
+        return this.get('/v1/plugins');
+    }
+
+    async getPluginById(id) {
+        return this.get(`/v1/plugins/${id}`);
+    }
+
+    async createPlugin(data) {
+        return this.post('/v1/plugins', data);
+    }
+
+    async updatePlugin(id, data) {
+        return this.put(`/v1/plugins/${id}`, data);
+    }
+
+    async deletePlugin(id) {
+        return this.delete(`/v1/plugins/${id}`);
+    }
 }
 
 // Create and export API client instance
