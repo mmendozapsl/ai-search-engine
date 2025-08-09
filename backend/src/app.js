@@ -36,15 +36,25 @@ app.use(express.urlencoded({ extended: true }));
 
 // Initialize databases
 async function initializeDatabases() {
+  console.log('🔄 Initializing databases...');
+  
+  // Initialize PostgreSQL (optional)
   try {
-    console.log('🔄 Initializing databases...');
     await postgresDb.initializeTables();
-    await mysqlDb.initializeTables();
-    console.log('✅ All databases initialized successfully');
+    console.log('✅ PostgreSQL initialized successfully');
   } catch (error) {
-    console.error('❌ Database initialization failed:', error);
-    // Don't exit, just log the error - databases might not be available
+    console.log('⚠️ PostgreSQL not available, skipping...');
   }
+
+  // Initialize MySQL (optional)
+  try {
+    await mysqlDb.initializeTables();
+    console.log('✅ MySQL initialized successfully');
+  } catch (error) {
+    console.log('⚠️ MySQL not available, skipping...');
+  }
+  
+  console.log('✅ Database initialization completed');
 }
 
 // Health check endpoint
@@ -127,7 +137,12 @@ app.get('/api', (req, res) => {
         search: 'POST /api/v1/psl-ai-search'
       },
       plugins: {
-        pslAiSearchScript: 'GET /v1/embed/psl-ai-search.js'
+        pslAiSearchScript: 'GET /v1/embed/psl-ai-search.js',
+        getAll: 'GET /v1/plugins',
+        getById: 'GET /v1/plugins/:id',
+        create: 'POST /v1/plugins',
+        update: 'PUT /v1/plugins/:id',
+        delete: 'DELETE /v1/plugins/:id'
       }
     }
   });

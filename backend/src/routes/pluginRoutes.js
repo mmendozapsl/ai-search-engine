@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const PluginController = require('../controllers/pluginController');
 const router = express.Router();
 
 // Serve the psl-ai-search.js plugin
@@ -13,5 +14,12 @@ router.get('/embed/psl-ai-search.js', (req, res) => {
   
   res.sendFile(pluginPath);
 });
+
+// Plugin CRUD routes
+router.get('/plugins', PluginController.getAllPlugins);
+router.get('/plugins/:id', PluginController.getPluginById);
+router.post('/plugins', PluginController.createPlugin);
+router.put('/plugins/:id', PluginController.updatePlugin);
+router.delete('/plugins/:id', PluginController.deletePlugin);
 
 module.exports = router;
